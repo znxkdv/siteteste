@@ -3,108 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador de QR Code para Lucoin</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+    <title>Pedir em Casamento</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: red;
+            color: white;
+            font-family: 'Arial', sans-serif;
             text-align: center;
-            padding: 50px;
-            background-color: #f4f4f4;
-            color: #333;
         }
         h1 {
-            color: #4CAF50;
+            font-size: 3em;
         }
-        input[type="number"], input[type="text"], button {
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            width: 200px;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
+        #yes, #no {
+            padding: 15px 30px;
+            font-size: 1.5em;
+            margin: 20px;
             border: none;
             cursor: pointer;
         }
-        button:hover {
-            background-color: #45a049;
+        #yes {
+            background-color: green;
+            color: white;
         }
-        #qrcode {
-            margin: 20px auto;
+        #no {
+            background-color: blue;
+            color: white;
+            position: relative;
         }
     </style>
 </head>
 <body>
-    <h1>Gerador de QR Code para Compra de Lucoin</h1>
-    <input type="number" id="amount" placeholder="Valor em R$" required />
-    <button id="generate">Gerar QR Code</button>
-    <div id="qrcode"></div>
+    <h1>Quer casar comigo? ❤️</h1>
+    <button id="yes">Sim</button>
+    <button id="no">Não</button>
 
     <script>
-        $(document).ready(function() {
-            $("#generate").click(function() {
-                const amount = $("#amount").val();
-                const dueDate = "2024-10-16"; // Data de vencimento definida
-                const requestNumber = "12345"; // Número do pedido
-                const clientID = "znxkdv_1722980018383"; // Seu client ID
-                const clientSecret = "4556d5be07656bd8d266fb867a251e9f124437c14387710178f9f8f31dadb6a363dffd4d67e64d8d9a18abab3da552f8"; // Seu client secret
-
-                const data = {
-                    requestNumber: requestNumber,
-                    dueDate: dueDate,
-                    amount: parseFloat(amount),
-                    shippingAmount: 0.0,
-                    discountAmount: 0.0,
-                    usernameCheckout: "checkout",
-                    callbackUrl: "https://webhook.com/",
-                    client: {
-                        name: "José da Silva",
-                        document: "927.300.300-18", // CPF
-                        phoneNumber: "62999815500",
-                        email: "josesilva@gmail.com",
-                        address: {
-                            codIbge: "5208707",
-                            street: "Rua Paraíba",
-                            number: "150",
-                            complement: "",
-                            zipCode: "74663-520",
-                            neighborhood: "Goiânia 2",
-                            city: "Goiânia",
-                            state: "GO"
-                        }
-                    },
-                    products: [
-                        {
-                            description: "Criptomoeda Lucoin",
-                            quantity: 1,
-                            value: parseFloat(amount)
-                        }
-                    ]
-                };
-
-                $.ajax({
-                    url: 'https://sandbox.ws.suitpay.app/api/v1/gateway/request-qrcode',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    headers: {
-                        'ci': clientID,
-                        'cs': clientSecret
-                    },
-                    data: JSON.stringify(data),
-                    success: function(response) {
-                        $("#qrcode").empty(); // Limpa QR Code anterior
-                        $("#qrcode").qrcode(response.qrCodeUrl); // Assumindo que o URL do QR Code é retornado no campo qrCodeUrl
-                    },
-                    error: function() {
-                        alert("Erro ao gerar código QR. Verifique os dados.");
-                    }
-                });
-            });
-        });
+        const noButton = document.getElementById('no');
+        const moveButton = () => {
+            const x = Math.random() * 100;
+            const y = Math.random() * 100;
+            noButton.style.transform = `translate(${x}px, ${y}px)`;
+        };
+        setInterval(moveButton, 500);
     </script>
 </body>
 </html>
