@@ -1,63 +1,351 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Site Bombastivo Sem Nada Ve com Casamento</title>
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background-color: red;
-            color: white;
-            font-family: 'Arial', sans-serif;
-            text-align: center;
-        }
-        h1 {
-            font-size: 3em;
-        }
-        #yes, #no {
-            padding: 15px 30px;
-            font-size: 1.5em;
-            margin: 20px;
-            border: none;
-            cursor: pointer;
-        }
-        #yes {
-            background-color: green;
-            color: white;
-        }
-        #no {
-            background-color: blue;
-            color: white;
-            position: relative;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lucoin - O Futuro das Criptomoedas</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #F0F0F0;
+      color: #333;
+    }
+
+    /* Cores principais */
+    :root {
+      --green-dark: #006400;
+      --green-light: #32CD32;
+      --white: #FFFFFF;
+      --gray-light: #F0F0F0;
+      --gray-dark: #333;
+    }
+
+    /* Header */
+    header {
+      background-color: var(--green-dark);
+      color: var(--white);
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+    }
+
+    /* Hamburger Menu */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      background-color: var(--white);
+      height: 4px;
+      width: 25px;
+      margin: 3px 0;
+      transition: 0.4s;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: none;
+      flex-direction: column;
+      text-align: left;
+    }
+
+    nav ul li {
+      margin: 10px 0;
+    }
+
+    nav ul li a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 12px 20px;
+      border-radius: 30px;
+      background-color: rgba(255, 255, 255, 0.1);
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    nav ul li a:hover {
+      background-color: var(--white);
+      color: var(--green-dark);
+    }
+
+    .menu-active {
+      display: flex;
+    }
+
+    @media (min-width: 768px) {
+      .menu-toggle {
+        display: none;
+      }
+
+      nav ul {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+      }
+
+      nav ul li {
+        margin: 0 15px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: flex;
+      }
+
+      nav ul {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background-color: var(--green-dark);
+        padding: 20px 0;
+      }
+    }
+
+    /* Seção de Crescimento */
+    .growth {
+      background-color: var(--gray-light);
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .growth h2 {
+      color: var(--green-dark);
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+    }
+
+    .growth p {
+      color: var(--gray-dark);
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+
+    .highlight {
+      color: var(--green-light);
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+
+    .growth-percentage {
+      color: var(--green-light);
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    /* Gráfico */
+    .chart-container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 60px 20px;
+      background: linear-gradient(135deg, var(--green-light), var(--green-dark));
+      color: white;
+    }
+
+    .hero h2 {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+
+    /* Botão de compra */
+    .buy-button {
+      background-color: var(--green-light);
+      color: var(--white);
+      padding: 15px 25px;
+      font-size: 1.5rem;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s, transform 0.2s, box-shadow 0.2s;
+      border: none;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .buy-button:hover {
+      background-color: var(--white);
+      color: var(--green-dark);
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .buy-button:focus {
+      outline: none;
+    }
+
+    /* Seção de Conversão */
+    .converter {
+      background-color: var(--white);
+      padding: 40px 20px;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .converter h2 {
+      color: var(--green-dark);
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+    }
+
+    .converter input {
+      padding: 10px;
+      font-size: 1rem;
+      width: 200px;
+      border: 2px solid var(--green-dark);
+      border-radius: 5px;
+      margin-bottom: 15px;
+    }
+
+    .converter button {
+      background-color: var(--green-light);
+      color: var(--white);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .converter button:hover {
+      background-color: var(--white);
+      color: var(--green-dark);
+      transform: scale(1.05);
+    }
+
+  </style>
 </head>
 <body>
-    <h1>Quer casar comigo? ❤️</h1>
-    <button id="yes">Sim</button>
-    <button id="no">Não</button>
 
-    <script>
-        const noButton = document.getElementById('no');
-        const moveButton = () => {
-            const x = Math.random() * 200; // Distância do movimento reduzida
-            const y = Math.random() * 200;
-            noButton.style.transform = `translate(${x}px, ${y}px)`;
-        };
-        setInterval(moveButton, 300); // Intervalo aumentado para desacelerar o movimento
+  <!-- Header -->
+  <header>
+    <h1>Lucoin</h1>
+    <div class="menu-toggle" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <nav>
+      <ul id="menu">
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#como-funciona">Como Funciona</a></li>
+        <li><a href="#beneficios">Benefícios</a></li>
+        <li><a href="#comprar">Comprar Agora</a></li>
+      </ul>
+    </nav>
+  </header>
 
-        document.getElementById('yes').onclick = () => {
-            alert("Prometo fazer você a pessoa mais feliz do mundo, meu amorzinho! ❤️");
-        };
+  <!-- Seção de Crescimento -->
+  <section class="growth">
+    <h2>Crescimento Impulsionado da Lucoin</h2>
+    <p>A Lucoin teve um crescimento impressionante de <span class="highlight">R$ 0,15</span> para <span class="highlight">R$ 0,75</span> em 15 dias!</p>
+    
+    <!-- Cálculo do crescimento percentual -->
+    <p class="growth-percentage">Aumento de 400%</p>
+    <p>Com uma valorização constante ao longo dos dias, a expectativa é que esse crescimento continue, tornando a Lucoin uma das moedas mais promissoras do mercado.</p>
+    
+    <!-- Gráfico de Crescimento -->
+    <div class="chart-container">
+      <canvas id="growthChart"></canvas>
+    </div>
+  </section>
 
-        document.getElementById('no').onclick = () => {
-            alert("Então vai tomar no seu cu!");
-        };
-    </script>
+  <!-- Seção do Conversor -->
+  <section class="converter">
+    <h2>Veja quanto sua moeda pode gerar!</h2>
+    <p>Com a Lucoin, ao investir R$ 10, você pode ganhar até R$ 20!</p>
+    <input type="number" id="amountInput" placeholder="Valor em R$" />
+    <button onclick="convertToLucoin()">Converter</button>
+    <p id="conversionResult" style="margin-top: 15px; font-size: 1.2rem;"></p>
+  </section>
+
+  <!-- Botão de Compra -->
+  <section class="hero">
+    <h2>O Futuro das Finanças Digitais com Lucoin</h2>
+    <p>Transformando a maneira como você gerencia seus ativos com segurança, rapidez e eficiência.</p>
+    <button class="buy-button" onclick="window.location.href='COMPRA.html'">Comprar Lucoin</button>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Gráfico de Crescimento
+    const ctx = document.getElementById('growthChart').getContext('2d');
+    const growthChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Dia 1', 'Dia 5', 'Dia 10', 'Dia 15', 'Dia 20'],
+        datasets: [{
+          label: 'Valor da Lucoin',
+          data: [0.15, 0.30, 0.50, 0.75, 1.00],
+          borderColor: 'rgba(50, 205, 50, 1)',
+          backgroundColor: 'rgba(50, 205, 50, 0.2)',
+          borderWidth: 2,
+          fill: true
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Valor em R$'
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Dias'
+            }
+          }
+        }
+      }
+    });
+
+    // Função do Menu
+    function toggleMenu() {
+      const menu = document.getElementById("menu");
+      menu.classList.toggle("menu-active");
+    }
+
+    // Função de Conversão
+    function convertToLucoin() {
+      const input = document.getElementById("amountInput").value;
+      const convertedValue = input * 2; // Dobra o valor inserido
+      const lucoinsEarned = (input / 0.75).toFixed(2); // Calcula a quantidade de Lucoins
+      const resultText = `Você ganhará R$ ${lucoinsEarned} Lucoins e poderá ganhar até R$ ${convertedValue}!`;
+      document.getElementById("conversionResult").innerText = resultText;
+    }
+  </script>
+
 </body>
 </html>
