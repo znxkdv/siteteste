@@ -9,43 +9,32 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
             text-align: center;
             padding: 50px;
+            background-color: #f4f4f4;
+            color: #333;
         }
         h1 {
             color: #4CAF50;
         }
-        #qrcode {
-            margin: 20px auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            background-color: #fff;
-            border-radius: 8px;
-        }
-        input[type="number"] {
+        input[type="number"], input[type="text"], button {
             padding: 10px;
-            width: 200px;
+            margin: 10px 0;
             border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-bottom: 10px;
+            border-radius: 4px;
+            width: 200px;
         }
         button {
-            padding: 10px 20px;
             background-color: #4CAF50;
             color: white;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
         }
         button:hover {
             background-color: #45a049;
         }
-        .footer {
-            margin-top: 20px;
-            font-size: 12px;
-            color: #777;
+        #qrcode {
+            margin: 20px auto;
         }
     </style>
 </head>
@@ -54,13 +43,12 @@
     <input type="number" id="amount" placeholder="Valor em R$" required />
     <button id="generate">Gerar QR Code</button>
     <div id="qrcode"></div>
-    <div class="footer">Powered by Suitpay API</div>
 
     <script>
         $(document).ready(function() {
             $("#generate").click(function() {
                 const amount = $("#amount").val();
-                const dueDate = "2024-10-07"; // Data de vencimento
+                const dueDate = "2024-10-16"; // Data de vencimento definida
                 const requestNumber = "12345"; // Número do pedido
                 const clientID = "znxkdv_1722980018383"; // Seu client ID
                 const clientSecret = "4556d5be07656bd8d266fb867a251e9f124437c14387710178f9f8f31dadb6a363dffd4d67e64d8d9a18abab3da552f8"; // Seu client secret
@@ -75,7 +63,7 @@
                     callbackUrl: "https://webhook.com/",
                     client: {
                         name: "José da Silva",
-                        document: "927.300.300-18",
+                        document: "927.300.300-18", // CPF
                         phoneNumber: "62999815500",
                         email: "josesilva@gmail.com",
                         address: {
