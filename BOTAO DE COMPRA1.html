@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de QR Code PIX</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            text-align: center;
+        }
+        #qrCode {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gerador de QR Code PIX</h1>
+    <input type="number" id="amount" placeholder="Valor em R$" required />
+    <button id="generateButton">Gerar QR Code</button>
+    <div id="qrCode"></div>
+
+    <script>
+        document.getElementById('generateButton').addEventListener('click', function () {
+            const amount = parseFloat(document.getElementById('amount').value);
+
+            if (!amount || amount <= 0) {
+                alert('Por favor, insira um valor válido.');
+                return;
+            }
+
+            fetch('https://sandbox.ws.suitpay.app/api/v1/gateway/request-qrcode', {
+                method: 'POST',
+                headers: {
+                    'ci': 'znxkdv_1722980018383',
+                    'cs': '4556d5be07656bd8d266fb867a251e9f124437c14387710178f9f8f31dadb6a363dffd4d67e64d8d9a18abab3da552f8',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    requestNumber: '12345',
+                    dueDate: new Date(new Date().setDate(new Date().getDate() + 30)).toISOString().split('T')[0], // Data de vencimento em 30 dias
+                    amount: amount.toFixed(2),
+                    shippingAmount: 0.0,
+                    discountAmount: 0.0,
+                    usernameCheckout: 'checkout',
+                    callbackUrl: 'https://webhook.com/',
+                    client: {
+                        name: 'José da Silva',
+                        document: '927.300.300-18',
+                        phoneNumber: '62999815500',
+                        email: 'josesilva@gmail.com',
+                        address: {
+                            codIbge: '5208707',
+                            street: 'Rua Paraíba',
+                            number: '150',
+                            complement: '',
+                            zipCode: '74663-520',
+                            neighborhood: 'Goiânia 2',
+                            city: 'Goiânia',
+                            state: 'GO'
+                        }
+                    },
+                    products: [
+                        {
+                            description: 'Produto 1',
+                            quantity: 1,
+                            value: amount.toFixed(2)
+                        }
+                    ]
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.qrCodeUrl) {
+                    document.getElementById('qrCode').innerHTML = `<img src="${data.qrCodeUrl}" alt="QR Code PIX" />`;
+                } else {
+                    document.getElementById('qrCode').innerText = 'Erro ao gerar código: ' + (data.message || 'Desconhecido.');
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                document.getElementById('qrCode').innerText = 'Erro ao gerar código.';
+            });
+        });
+    </script>
+</body>
+</html>
