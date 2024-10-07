@@ -3,85 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador de QR Code PIX</title>
+    <title>Gerador de QR Code para Lucoin</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            padding: 20px;
+            background-color: #f0f8ff;
             text-align: center;
+            padding: 50px;
         }
-        #qrCode {
+        h1 {
+            color: #4CAF50;
+        }
+        #qrcode {
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            border-radius: 8px;
+        }
+        input[type="number"] {
+            padding: 10px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .footer {
             margin-top: 20px;
+            font-size: 12px;
+            color: #777;
         }
     </style>
 </head>
 <body>
-    <h1>Gerador de QR Code PIX</h1>
+    <h1>Gerador de QR Code para Compra de Lucoin</h1>
     <input type="number" id="amount" placeholder="Valor em R$" required />
-    <button id="generateButton">Gerar QR Code</button>
-    <div id="qrCode"></div>
+    <button id="generate">Gerar QR Code</button>
+    <div id="qrcode"></div>
+    <div class="footer">Powered by Suitpay API</div>
 
     <script>
-        document.getElementById('generateButton').addEventListener('click', function () {
-            const amount = parseFloat(document.getElementById('amount').value);
+        $(document).ready(function() {
+            $("#generate").click(function() {
+                const amount = $("#amount").val();
+                const dueDate = "2024-10-07"; // Data de vencimento
+                const requestNumber = "12345"; // Número do pedido
+                const clientID = "znxkdv_1722980018383"; // Seu client ID
+                const clientSecret = "4556d5be07656bd8d266fb867a251e9f124437c14387710178f9f8f31dadb6a363dffd4d67e64d8d9a18abab3da552f8"; // Seu client secret
 
-            if (!amount || amount <= 0) {
-                alert('Por favor, insira um valor válido.');
-                return;
-            }
-
-            fetch('https://sandbox.ws.suitpay.app/api/v1/gateway/request-qrcode', {
-                method: 'POST',
-                headers: {
-                    'ci': 'znxkdv_1722980018383',
-                    'cs': '4556d5be07656bd8d266fb867a251e9f124437c14387710178f9f8f31dadb6a363dffd4d67e64d8d9a18abab3da552f8',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    requestNumber: '12345',
-                    dueDate: new Date(new Date().setDate(new Date().getDate() + 30)).toISOString().split('T')[0], // Data de vencimento em 30 dias
-                    amount: amount.toFixed(2),
+                const data = {
+                    requestNumber: requestNumber,
+                    dueDate: dueDate,
+                    amount: parseFloat(amount),
                     shippingAmount: 0.0,
                     discountAmount: 0.0,
-                    usernameCheckout: 'checkout',
-                    callbackUrl: 'https://webhook.com/',
+                    usernameCheckout: "checkout",
+                    callbackUrl: "https://webhook.com/",
                     client: {
-                        name: 'José da Silva',
-                        document: '927.300.300-18',
-                        phoneNumber: '62999815500',
-                        email: 'josesilva@gmail.com',
+                        name: "José da Silva",
+                        document: "927.300.300-18",
+                        phoneNumber: "62999815500",
+                        email: "josesilva@gmail.com",
                         address: {
-                            codIbge: '5208707',
-                            street: 'Rua Paraíba',
-                            number: '150',
-                            complement: '',
-                            zipCode: '74663-520',
-                            neighborhood: 'Goiânia 2',
-                            city: 'Goiânia',
-                            state: 'GO'
+                            codIbge: "5208707",
+                            street: "Rua Paraíba",
+                            number: "150",
+                            complement: "",
+                            zipCode: "74663-520",
+                            neighborhood: "Goiânia 2",
+                            city: "Goiânia",
+                            state: "GO"
                         }
                     },
                     products: [
                         {
-                            description: 'Produto 1',
+                            description: "Criptomoeda Lucoin",
                             quantity: 1,
-                            value: amount.toFixed(2)
+                            value: parseFloat(amount)
                         }
                     ]
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.qrCodeUrl) {
-                    document.getElementById('qrCode').innerHTML = `<img src="${data.qrCodeUrl}" alt="QR Code PIX" />`;
-                } else {
-                    document.getElementById('qrCode').innerText = 'Erro ao gerar código: ' + (data.message || 'Desconhecido.');
-                }
-            })
-            .catch(error => {
-                console.error('Erro:', error);
-                document.getElementById('qrCode').innerText = 'Erro ao gerar código.';
+                };
+
+                $.ajax({
+                    url: 'https://sandbox.ws.suitpay.app/api/v1/gateway/request-qrcode',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    headers: {
+                        'ci': clientID,
+                        'cs': clientSecret
+                    },
+                    data: JSON.stringify(data),
+                    success: function(response) {
+                        $("#qrcode").empty(); // Limpa QR Code anterior
+                        $("#qrcode").qrcode(response.qrCodeUrl); // Assumindo que o URL do QR Code é retornado no campo qrCodeUrl
+                    },
+                    error: function() {
+                        alert("Erro ao gerar código QR. Verifique os dados.");
+                    }
+                });
             });
         });
     </script>
