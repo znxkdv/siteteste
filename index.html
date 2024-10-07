@@ -286,66 +286,28 @@
     <input type="number" id="amountInput" placeholder="Valor em R$" />
     <button onclick="convertToLucoin()">Converter</button>
     <p id="conversionResult" style="margin-top: 15px; font-size: 1.2rem;"></p>
+
+    <!-- Botão de Compra -->
+    <button class="buy-button" onclick="window.location.href='file:///C:/Users/marcu/Downloads/LUCOIN/BOTAO%20DE%20COMPRA1.html'">Comprar Lucoin</button>
   </section>
 
-  <!-- Botão de Compra -->
+  <!-- Seção Hero -->
   <section class="hero">
     <h2>O Futuro das Finanças Digitais com Lucoin</h2>
     <p>Transformando a maneira como você gerencia seus ativos com segurança, rapidez e eficiência.</p>
-    <button class="buy-button" onclick="window.location.href='COMPRA.html'">Comprar Lucoin</button>
   </section>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-    // Gráfico de Crescimento
-    const ctx = document.getElementById('growthChart').getContext('2d');
-    const growthChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['Dia 1', 'Dia 5', 'Dia 10', 'Dia 15', 'Dia 20'],
-        datasets: [{
-          label: 'Valor da Lucoin',
-          data: [0.15, 0.30, 0.50, 0.75, 1.00],
-          borderColor: 'rgba(50, 205, 50, 1)',
-          backgroundColor: 'rgba(50, 205, 50, 0.2)',
-          borderWidth: 2,
-          fill: true
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-            title: {
-              display: true,
-              text: 'Valor em R$'
-            }
-          },
-          x: {
-            title: {
-              display: true,
-              text: 'Dias'
-            }
-          }
-        }
-      }
-    });
-
-    // Função do Menu
     function toggleMenu() {
-      const menu = document.getElementById("menu");
-      menu.classList.toggle("menu-active");
+      const menu = document.getElementById('menu');
+      menu.classList.toggle('menu-active');
     }
 
-    // Função de Conversão
     function convertToLucoin() {
-      const input = document.getElementById("amountInput").value;
-      const convertedValue = input * 2; // Dobra o valor inserido
-      const lucoinsEarned = (input / 0.75).toFixed(2); // Calcula a quantidade de Lucoins
-      const resultText = `Você ganhará R$ ${lucoinsEarned} Lucoins e poderá ganhar até R$ ${convertedValue}!`;
-      document.getElementById("conversionResult").innerText = resultText;
+      const amount = document.getElementById('amountInput').value;
+      const result = amount * 2; // Exemplo de conversão (1 real = 2 Lucoin)
+      document.getElementById('conversionResult').innerText = `Você receberá ${result} Lucoin!`;
     }
   </script>
-
 </body>
 </html>

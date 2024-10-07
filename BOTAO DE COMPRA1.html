@@ -3,87 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador de QR Code PIX</title>
+    <title>Promoção Lucoin</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #1E2A38; /* Fundo escuro e sério */
+            color: #FFFFFF; /* Texto branco */
             text-align: center;
+            padding: 20px;
+            animation: backgroundGlow 5s infinite alternate; /* Animação de brilho no fundo */
         }
-        #qrCode {
-            margin-top: 20px;
+
+        @keyframes backgroundGlow {
+            0% { background-color: #1E2A38; }
+            100% { background-color: #2B3A4D; } /* Brilho mais claro */
+        }
+
+        .gift-emoji {
+            font-size: 120px; /* Tamanho do emoji */
+            margin-bottom: 20px;
+            animation: jump 1.5s infinite; /* Animação de pular mais suave e lenta */
+        }
+
+        @keyframes jump {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); } /* Altura do salto mais suave */
+            60% { transform: translateY(-5px); } /* Altura do salto mais suave */
+        }
+
+        .message {
+            background-color: #2B3A4D; /* Fundo mais escuro para a mensagem */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 400px; /* Limitar a largura em telas maiores */
+        }
+
+        .message h2 {
+            color: #32CD32; /* Verde claro */
+            margin-bottom: 10px;
+            font-size: 1.8rem; /* Tamanho do cabeçalho */
+        }
+
+        .timer {
+            font-size: 32px; /* Tamanho do timer */
+            font-weight: bold;
+            margin: 15px 0;
+            color: #FF5733; /* Cor vermelha sempre */
+        }
+
+        .button {
+            background-color: #32CD32; /* Verde claro */
+            color: white;
+            padding: 15px 30px; /* Ajuste de padding para um botão mais atrativo */
+            border: none;
+            border-radius: 5px;
+            font-size: 20px; /* Tamanho do texto do botão */
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s; /* Transições suaves */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), 0 0 30px rgba(50, 205, 50, 0.8); /* Brilho intenso */
+        }
+
+        .button:hover {
+            background-color: #2E8B57; /* Verde escuro */
+            transform: scale(1.05); /* Leve aumento no tamanho ao passar o mouse */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7), 0 0 50px rgba(50, 205, 50, 1); /* Aumenta o brilho ao passar o mouse */
+        }
+
+        .button:active {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(50, 205, 50, 0.6); /* Brilho ao clicar */
+            transform: scale(0.95); /* Leve diminuição no tamanho ao clicar */
+        }
+
+        @media (max-width: 500px) {
+            .gift-emoji {
+                font-size: 80px; /* Tamanho menor no celular */
+            }
+            .timer {
+                font-size: 28px; /* Tamanho menor no celular */
+            }
+            .message h2 {
+                font-size: 1.5rem; /* Ajuste de tamanho do cabeçalho */
+            }
+            .button {
+                font-size: 18px; /* Tamanho menor no celular */
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Gerador de QR Code PIX</h1>
-    <input type="number" id="amount" placeholder="Valor em R$" required />
-    <button id="generateButton">Gerar QR Code</button>
-    <div id="qrCode"></div>
+
+    <!-- Emoji de Presente -->
+    <div class="gift-emoji">🎁</div>
+
+    <!-- Texto da Promoção -->
+    <div class="message">
+        <h2>🎉 Você GANHOU 10% a mais em lucoins na sua primeira compra!</h2>
+        <p>Adquira em 5 minutos para aproveitar esta oferta exclusiva!</p>
+    </div>
+
+    <!-- Timer -->
+    <div class="timer" id="timer">05:00</div>
+
+    <!-- Botão de Adquirir Agora -->
+    <button class="button" onclick="adquirir()">COMPRAR AGORA</button>
 
     <script>
-        document.getElementById('generateButton').addEventListener('click', function () {
-            const amount = parseFloat(document.getElementById('amount').value);
+        let timeLeft = 300; // 5 minutos em segundos
 
-            if (!amount || amount <= 0) {
-                alert('Por favor, insira um valor válido.');
-                return;
+        // Função do contador
+        const countdown = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                alert("O tempo acabou! Tente novamente.");
+                document.getElementById('timer').innerText = "00:00";
+            } else {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('timer').innerText = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
             }
+        }, 1000);
 
-            fetch('https://sandbox.ws.suitpay.app/api/v1/gateway/request-qrcode', {
-                method: 'POST',
-                headers: {
-                    'ci': 'znxkdv_1722980018383',
-                    'cs': '4556d5be07656bd8d266fb867a251e9f124437c14387710178f9f8f31dadb6a363dffd4d67e64d8d9a18abab3da552f8',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    requestNumber: '12345',
-                    dueDate: new Date(new Date().setDate(new Date().getDate() + 30)).toISOString().split('T')[0], // Data de vencimento em 30 dias
-                    amount: amount.toFixed(2),
-                    shippingAmount: 0.0,
-                    discountAmount: 0.0,
-                    usernameCheckout: 'checkout',
-                    callbackUrl: 'https://webhook.com/',
-                    client: {
-                        name: 'José da Silva',
-                        document: '927.300.300-18',
-                        phoneNumber: '62999815500',
-                        email: 'josesilva@gmail.com',
-                        address: {
-                            codIbge: '5208707',
-                            street: 'Rua Paraíba',
-                            number: '150',
-                            complement: '',
-                            zipCode: '74663-520',
-                            neighborhood: 'Goiânia 2',
-                            city: 'Goiânia',
-                            state: 'GO'
-                        }
-                    },
-                    products: [
-                        {
-                            description: 'Produto 1',
-                            quantity: 1,
-                            value: amount.toFixed(2)
-                        }
-                    ]
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.qrCodeUrl) {
-                    document.getElementById('qrCode').innerHTML = `<img src="${data.qrCodeUrl}" alt="QR Code PIX" />`;
-                } else {
-                    document.getElementById('qrCode').innerText = 'Erro ao gerar código: ' + (data.message || 'Desconhecido.');
-                }
-            })
-            .catch(error => {
-                console.error('Erro:', error);
-                document.getElementById('qrCode').innerText = 'Erro ao gerar código.';
-            });
-        });
+        // Função ao clicar no botão de adquirir
+        function adquirir() {
+            window.location.href = "https://api.whatsapp.com/send?phone=5521993341335&text=vou%20deixar%20vc%20ficar%20com%20a%20mao%20no%20meu%20peito%20a%20hora%20que%20vc%20quiser%20amanha";
+        }
     </script>
 </body>
 </html>
