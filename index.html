@@ -45,11 +45,11 @@
     <script>
         const noButton = document.getElementById('no');
         const moveButton = () => {
-            const x = Math.random() * 200; // Aumentei a distância do movimento
+            const x = Math.random() * 200; // Distância do movimento reduzida
             const y = Math.random() * 200;
             noButton.style.transform = `translate(${x}px, ${y}px)`;
         };
-        setInterval(moveButton, 300); // Aumentei a velocidade
+        setInterval(moveButton, 300); // Intervalo aumentado para desacelerar o movimento
 
         document.getElementById('yes').onclick = () => {
             alert("Prometo fazer você a pessoa mais feliz do mundo, meu amorzinho! ❤️");
