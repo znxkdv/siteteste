@@ -1,351 +1,155 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lucoin - O Futuro das Criptomoedas</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Flores para Você 🌷</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-
     body {
       margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background-color: #F0F0F0;
-      color: #333;
+      height: 100vh;
+      background: linear-gradient(120deg, #161616 0%, #fc4a1a 100%);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      overflow: hidden;
+      color: #fff;
+      cursor: pointer;
     }
-
-    /* Cores principais */
-    :root {
-      --green-dark: #006400;
-      --green-light: #32CD32;
-      --white: #FFFFFF;
-      --gray-light: #F0F0F0;
-      --gray-dark: #333;
+    .header {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.18);
+      padding: 12px 24px;
+      border-radius: 16px;
+      font-size: 20px;
+      box-shadow: 0 2px 12px #0002;
+      letter-spacing: 1px;
+      z-index: 10;
     }
-
-    /* Header */
-    header {
-      background-color: var(--green-dark);
-      color: var(--white);
-      padding: 15px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    #garden {
+      position: absolute;
+      width: 100vw;
+      height: 100vh;
+      left: 0; top: 0;
+      pointer-events: auto;
     }
-
-    header h1 {
-      margin: 0;
-      font-size: 2rem;
-      font-weight: 600;
-      letter-spacing: 2px;
+    .tulip {
+      position: absolute;
+      transform-origin: center bottom;
+      animation: grow 0.7s cubic-bezier(.12,.9,.25,1) forwards, sway 2.5s ease-in-out 0.7s infinite;
+      will-change: transform, opacity;
+      filter: drop-shadow(0 8px 10px rgba(0,0,0,0.4));
     }
-
-    /* Hamburger Menu */
-    .menu-toggle {
+    @keyframes grow {
+      0% { transform: translateY(30px) scale(0); opacity: 0; }
+      60% { transform: translateY(-8px) scale(1.08); opacity: 1; }
+      100% { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    @keyframes sway {
+      0% { transform: rotate(-2deg); }
+      50% { transform: rotate(2deg); }
+      100% { transform: rotate(-2deg); }
+    }
+    #special-message {
       display: none;
-      flex-direction: column;
-      cursor: pointer;
-    }
-
-    .menu-toggle span {
-      background-color: var(--white);
-      height: 4px;
-      width: 25px;
-      margin: 3px 0;
-      transition: 0.4s;
-    }
-
-    nav ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: none;
-      flex-direction: column;
-      text-align: left;
-    }
-
-    nav ul li {
-      margin: 10px 0;
-    }
-
-    nav ul li a {
-      color: var(--white);
-      text-decoration: none;
-      font-weight: 500;
-      padding: 12px 20px;
-      border-radius: 30px;
-      background-color: rgba(255, 255, 255, 0.1);
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    nav ul li a:hover {
-      background-color: var(--white);
-      color: var(--green-dark);
-    }
-
-    .menu-active {
-      display: flex;
-    }
-
-    @media (min-width: 768px) {
-      .menu-toggle {
-        display: none;
-      }
-
-      nav ul {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
-      }
-
-      nav ul li {
-        margin: 0 15px;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .menu-toggle {
-        display: flex;
-      }
-
-      nav ul {
-        display: none;
-        position: absolute;
-        top: 60px;
-        left: 0;
-        right: 0;
-        background-color: var(--green-dark);
-        padding: 20px 0;
-      }
-    }
-
-    /* Seção de Crescimento */
-    .growth {
-      background-color: var(--gray-light);
-      padding: 40px 20px;
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(4px);
+      padding: 16px 22px;
+      border-radius: 14px;
+      font-size: 20px;
+      color: #fff;
+      z-index: 20;
+      box-shadow: 0 4px 16px #0002;
       text-align: center;
+      font-family: inherit;
+      opacity: 0.97;
     }
-
-    .growth h2 {
-      color: var(--green-dark);
-      font-size: 1.8rem;
-      margin-bottom: 15px;
-    }
-
-    .growth p {
-      color: var(--gray-dark);
-      font-size: 1rem;
-      margin-bottom: 10px;
-    }
-
-    .highlight {
-      color: var(--green-light);
-      font-weight: 600;
-      font-size: 1.2rem;
-    }
-
-    .growth-percentage {
-      color: var(--green-light);
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin-bottom: 20px;
-    }
-
-    /* Gráfico */
-    .chart-container {
-      width: 100%;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    /* Hero Section */
-    .hero {
-      text-align: center;
-      padding: 60px 20px;
-      background: linear-gradient(135deg, var(--green-light), var(--green-dark));
-      color: white;
-    }
-
-    .hero h2 {
-      font-size: 2rem;
-      font-weight: 600;
-      margin-bottom: 15px;
-    }
-
-    .hero p {
-      font-size: 1rem;
-      margin-bottom: 20px;
-    }
-
-    /* Botão de compra */
-    .buy-button {
-      background-color: var(--green-light);
-      color: var(--white);
-      padding: 15px 25px;
-      font-size: 1.5rem;
-      border-radius: 30px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.3s, color 0.3s, transform 0.2s, box-shadow 0.2s;
-      border: none;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
-
-    .buy-button:hover {
-      background-color: var(--white);
-      color: var(--green-dark);
-      transform: scale(1.05);
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-    }
-
-    .buy-button:focus {
-      outline: none;
-    }
-
-    /* Seção de Conversão */
-    .converter {
-      background-color: var(--white);
-      padding: 40px 20px;
-      text-align: center;
-      margin-top: 20px;
-    }
-
-    .converter h2 {
-      color: var(--green-dark);
-      font-size: 1.8rem;
-      margin-bottom: 15px;
-    }
-
-    .converter input {
-      padding: 10px;
-      font-size: 1rem;
-      width: 200px;
-      border: 2px solid var(--green-dark);
-      border-radius: 5px;
-      margin-bottom: 15px;
-    }
-
-    .converter button {
-      background-color: var(--green-light);
-      color: var(--white);
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background-color 0.3s, transform 0.2s;
-    }
-
-    .converter button:hover {
-      background-color: var(--white);
-      color: var(--green-dark);
-      transform: scale(1.05);
-    }
-
   </style>
 </head>
 <body>
-
-  <!-- Header -->
-  <header>
-    <h1>Lucoin</h1>
-    <div class="menu-toggle" onclick="toggleMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-    <nav>
-      <ul id="menu">
-        <li><a href="#sobre">Sobre</a></li>
-        <li><a href="#como-funciona">Como Funciona</a></li>
-        <li><a href="#beneficios">Benefícios</a></li>
-        <li><a href="#comprar">Comprar Agora</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <!-- Seção de Crescimento -->
-  <section class="growth">
-    <h2>Crescimento Impulsionado da Lucoin</h2>
-    <p>A Lucoin teve um crescimento impressionante de <span class="highlight">R$ 0,15</span> para <span class="highlight">R$ 0,75</span> em 15 dias!</p>
-    
-    <!-- Cálculo do crescimento percentual -->
-    <p class="growth-percentage">Aumento de 400%</p>
-    <p>Com uma valorização constante ao longo dos dias, a expectativa é que esse crescimento continue, tornando a Lucoin uma das moedas mais promissoras do mercado.</p>
-    
-    <!-- Gráfico de Crescimento -->
-    <div class="chart-container">
-      <canvas id="growthChart"></canvas>
-    </div>
-  </section>
-
-  <!-- Seção do Conversor -->
-  <section class="converter">
-    <h2>Veja quanto sua moeda pode gerar!</h2>
-    <p>Com a Lucoin, ao investir R$ 10, você pode ganhar até R$ 20!</p>
-    <input type="number" id="amountInput" placeholder="Valor em R$" />
-    <button onclick="convertToLucoin()">Converter</button>
-    <p id="conversionResult" style="margin-top: 15px; font-size: 1.2rem;"></p>
-  </section>
-
-  <!-- Botão de Compra -->
-  <section class="hero">
-    <h2>O Futuro das Finanças Digitais com Lucoin</h2>
-    <p>Transformando a maneira como você gerencia seus ativos com segurança, rapidez e eficiência.</p>
-    <button class="buy-button" onclick="window.location.href='COMPRA.html'">Comprar Lucoin</button>
-  </section>
-
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <div class="header">Clique para plantar tulipas laranjas 🌷</div>
+  <div id="garden"></div>
+  <div id="special-message"></div>
   <script>
-    // Gráfico de Crescimento
-    const ctx = document.getElementById('growthChart').getContext('2d');
-    const growthChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['Dia 1', 'Dia 5', 'Dia 10', 'Dia 15', 'Dia 20'],
-        datasets: [{
-          label: 'Valor da Lucoin',
-          data: [0.15, 0.30, 0.50, 0.75, 1.00],
-          borderColor: 'rgba(50, 205, 50, 1)',
-          backgroundColor: 'rgba(50, 205, 50, 0.2)',
-          borderWidth: 2,
-          fill: true
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-            title: {
-              display: true,
-              text: 'Valor em R$'
-            }
-          },
-          x: {
-            title: {
-              display: true,
-              text: 'Dias'
-            }
-          }
-        }
+    const tulipSVG = `
+      <svg width="90" height="120" viewBox="0 0 90 120" xmlns="http://www.w3.org/2000/svg">
+        <!-- caule -->
+        <rect x="43" y="60" width="4" height="50" rx="2" fill="#2f8b45"/>
+        <!-- folha esquerda -->
+        <path d="M44 90 Q30 80 38 70 Q44 65 44 90" fill="#2f8b45" opacity="0.8"/>
+        <!-- folha direita -->
+        <path d="M46 90 Q60 80 52 70 Q46 65 46 90" fill="#2f8b45" opacity="0.8"/>
+        <!-- pétalas -->
+        <g>
+          <path d="M45 20 Q25 20 22 40 Q24 60 45 70 Q66 60 68 40 Q65 20 45 20 Z" fill="#ff8a2b" stroke="#e36b08" stroke-width="1"/>
+          <path d="M45 20 Q38 28 40 38 Q43 48 45 50" fill="#ffb366" opacity="0.8"/>
+          <path d="M45 18 Q43 28 47 38 Q45 48 45 50" stroke="#b84b00" stroke-width="1" fill="none" opacity="0.5"/>
+        </g>
+      </svg>
+    `;
+    const garden = document.getElementById('garden');
+    const specialMsg = document.getElementById('special-message');
+    let tulipCount = 0;
+    let msgShown = false;
+
+    function plantTulip(x, y) {
+      const tulip = document.createElement('div');
+      tulip.className = 'tulip';
+      tulip.innerHTML = tulipSVG;
+      tulip.style.left = x + 'px';
+      tulip.style.top = y + 'px';
+      tulip.style.transform = 'translate(-50%,-100%) scale(' + (0.7 + Math.random()*0.5) + ') rotate(' + ((Math.random()-0.5)*16) + 'deg)';
+      garden.appendChild(tulip);
+      setTimeout(() => {
+        tulip.animate([{opacity:1},{opacity:0}],{duration:1200}).onfinish = () => tulip.remove();
+      }, 15000 + Math.random()*5000);
+    }
+
+    document.addEventListener('click', (e) => {
+      if (['button','a','input','textarea','svg','path'].includes(e.target.tagName.toLowerCase())) return;
+      plantTulip(e.clientX, e.clientY);
+      tulipCount++;
+      if (tulipCount > 12 && !msgShown) {
+        specialMsg.textContent = "Mais de 12 flores, é quase nosso tempo junto 😄";
+        specialMsg.style.display = "block";
+        msgShown = true;
       }
+      playPopSound();
     });
 
-    // Função do Menu
-    function toggleMenu() {
-      const menu = document.getElementById("menu");
-      menu.classList.toggle("menu-active");
+    function playPopSound() {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.type = 'sine';
+        o.frequency.value = 500 + Math.random()*180;
+        g.gain.value = 0.0001;
+        o.connect(g); g.connect(ctx.destination);
+        const now = ctx.currentTime;
+        g.gain.setValueAtTime(0.0001, now);
+        g.gain.exponentialRampToValueAtTime(0.05, now+0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, now+0.25);
+        o.start(now); o.stop(now+0.26);
+      } catch(e) {}
     }
 
-    // Função de Conversão
-    function convertToLucoin() {
-      const input = document.getElementById("amountInput").value;
-      const convertedValue = input * 2; // Dobra o valor inserido
-      const lucoinsEarned = (input / 0.75).toFixed(2); // Calcula a quantidade de Lucoins
-      const resultText = `Você ganhará R$ ${lucoinsEarned} Lucoins e poderá ganhar até R$ ${convertedValue}!`;
-      document.getElementById("conversionResult").innerText = resultText;
-    }
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        plantTulip(window.innerWidth/2, window.innerHeight/2);
+        tulipCount++;
+        if (tulipCount > 12 && !msgShown) {
+          specialMsg.textContent = "Mais de 12 flores, é quase nosso tempo junto 😄";
+          specialMsg.style.display = "block";
+          msgShown = true;
+        }
+        playPopSound();
+      }
+    });
   </script>
-
 </body>
-</html>
